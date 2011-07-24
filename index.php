@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script 
+			src="https://www.google.com/jsapi?key=ABQIAAAAK9NC1o2LJFMQR3lc7kl7cRSiXgiVJE0MJkb707HvEnolqo2UBBSd9tzd1SOTnyVVMhE9HrUPkD2qCQ" 
+			type="text/javascript">
+		</script>
+		<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+		<script type="text/javascript" src="js/modernizr.js"></script>
+		<script type="text/javascript" src="js/js.js"></script>
+		<script type="text/javascript">
+		 	google.load("language", "1");
+		</script>
+	</head>
+	<body>
+		
+		<h1 id="heading"></h1>
+		<div id="controls">
+			<span id="show-rows">row</span>
+			<span id="show-squares">square</span>
+		</div>
+		<ul id="languages">
+			<li><a href="#english" id="english" class="selected">English</a></li>
+			<li><a href="#french" id="french">Français</a></li>
+			<li><a href="#afrikaans" id="afrikaans">Afrikaans</a></li>
+			<li><a href="#zulu" id="zulu">Zulu</a></li>
+			<li><a href="#italian" id="italian">Italiano</a></li>
+			<li><a href="#spanish" id="spanish">Español</a></li>			
+			<li><a href="#swahili" id="swahili">Kiswahili</a></li>
+			<li><a href="#lingala" id="lingala">Lingala</a></li>
+		</ul>
+		<div class="clear">.</div>
+		<ul id="rhapsodies">
+		<?php 
+			$info = "More information will be added here as we go along.";
+			$date = getdate();
+			
+			$lastday_ = mktime(0, 0, 0, $date['mon'], 0, $date['year']);
+			$lastday = strftime("%d", $lastday_);
+			
+			for($i = 1; $i <= $lastday; $i++){
+				echo "<li>
+						<a id='" .$i. "' tooltip-info='" . $info ."' class='day' href='http://www.rhapsodyofrealities.org/rordocs/dailyror/english/ror". $i .".pdf'>
+							
+							<span class='info'>
+								<span class='month'></span> ". $i ."
+							</span>
+							<span class='content'></span>
+						</a>	
+					  </li> ";
+			}
+		?>
+		</ul>
+		<div class="clear">.</div>
+		<div id="pdf">
+			
+		</div>
+		<div id="footer">
+			© 2011 <a href="http://emile.senga.cd">Emile Senga</a>
+			<span id="disclaimer">
+				<ol>
+					<li>Note, this site is still in alpha stage so it is full of bugs. Please forward any issues that you pick up to emile@senga.cd </li>
+					<li>Rhapsodies are downloaded as they're made available from www.rhapsodyofrealities.org, so please be aware the current rhapsody in your language *may not* be available.</li>
+				</ol>
+			</span>
+		</div>
+	</body>
+</html>
