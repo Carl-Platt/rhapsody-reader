@@ -1,9 +1,9 @@
 body{
-	font-family:Arial, Helvetica, sans-serif;
+	font-family:"Helvetica Neue", "Arial", sans-serif;
 	font-size:12px;
 	margin:0;
 	padding:0;
-	
+	background:#CCC;
 	}
 
 h1{
@@ -11,17 +11,102 @@ h1{
 	padding:0;
 	font-size:230%;
 	padding:10px 0 5px 20px;
+	color:#FFF;
+	text-shadow: black 0 1px 0;
+	display:inline;
+	/*
+	 text-shadow: white 0 1px 0;
+	 background:#CCC; */
+	}
+	
+body.overlaid .overlay {
+  -webkit-transform: translateY(0);
+}
+	
+.overlay {
+	/* using display none to hide the overlay nullifies -webkit-transition */
+	-webkit-transform: translateY(-50000px);
+	display: -webkit-box;
+	 position: fixed;
+	 width: 100%;
+	 height: 100%;
+	 top: 0;
+	 left: 0;
+	 background: rgba(0,0,0,0.8);
+	 -webkit-user-select: auto;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: stretch;	
+	-webkit-box-pack: center;
+}
+	.overlay > .wrap {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-box-align: stretch;
+		-webkit-box-pack: center;
+	}
+	.overlay > .wrap img{
+		margin:0 auto;
+	}
+
+header{
+	background:#000 url('../i/header-bg.jpg') top center;
+	padding:15px 0 0 0;
+	}
+	
+#help{
+	display:inline;
+	float:right;
+	margin-right:20px;
+	}
+	
+	#help img{
+		cursor:pointer;
 	}
 	
 #controls{
-	text-align:right;		
-	margin:0 0 10px 0;
-	padding:0 10px 0 0;
+	text-align:right;	
+	padding:0 20px 0 0;
+	display:inline;
+	float:right;
+	/* background:#CCC; */
+	
+	/*
+	 * Iteration 1 Notes: Controls are hidden in this version as they will be released in a future version
+	 */
+	 display:none;
+
 	}
+	
 	#controls span{
-		border:1px solid #999;
-		padding:5px 10px;
+		border:1px solid #666;
+		cursor:pointer;
+		width:30px;
+		height:30px;
+		display:inline-block;
+		margin-right:15px;
+		-moz-border-radius: 4px; 
+		border-radius: 4px;
 	}
+	
+	#controls #show-squares{
+		background:url('../i/buttons-small.png') 0 0 no-repeat;
+	}
+		#controls #show-squares:hover{
+			background:url('../i/buttons-small.png') -30px 0 no-repeat;
+		}
+		#controls #show-squares.selected{
+			background:url('../i/buttons-small.png') -30px 0 no-repeat;
+		}
+	
+	#controls #show-rows{
+		background:url('../i/buttons-small.png')  0 -32px no-repeat;
+	}
+		#controls #show-rows:hover{
+			background:url('../i/buttons-small.png')  -30px -32px no-repeat;
+		}
+		#controls #show-rows.selected{
+			background:url('../i/buttons-small.png')  -30px -32px no-repeat;
+		}
 	
 ul{
 	margin:0;
@@ -35,18 +120,24 @@ ul#languages {
 	margin:0 auto;
 	padding:0 10px 0 10px;
 	color:#CCC;
-	background:#333;
+	background:#005175;
 	font-family:Arial;
 	text-align:center;
 	line-height:45px;
 	font-size:130%;
+	margin-top:15px;	
+	
+	 /* for IE */
+  filter:alpha(opacity=60);
+  /* CSS3 standard */
+  opacity:0.6;
 }
 
 ul#languages li{
 	display:inline;
-	margin-bottom:15px;
 	margin-right:10px;
 	width:70px;
+	height:45px;
 	float:left;
 	padding:0 10px;
 	}
@@ -69,6 +160,8 @@ ul#languages li a:hover{
 	/* border-radius: 4px; */
 	background:#CCC;
 	color:#666;
+	border-left:1px solid #FFF;
+	border-right:1px solid #FFF;
 	}	
 	
 ul#languages li a.selected{	
@@ -76,28 +169,45 @@ ul#languages li a.selected{
 	background:#000;
 	text-decoration:none;
 	}
+	/*
+	*we don't want the selected item to have white borders so we set the hover class
+	*/
+	ul#languages li a.selected:hover{	
+		color:#FFF;
+		background:#000;
+		text-decoration:none;
+		border:none;
+	}
 	
 ul#rhapsodies{	
-	width:96%;
+	width:100%;
 	margin:0 auto;
-	
+	padding:15px 0 15px 0;
+	border-top:1px solid #eee;
+	/*
 	background: -moz-linear-gradient(top, rgba(255, 255, 255, .2) 30%, rgba(3, 68, 165, .2) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(30%, rgba(255, 255, 255, .2)), color-stop(100%, rgba(3, 68, 165, .2)));
+	*/	
 	
 	}
 	
-ul#rhapsodies li {
-	/* float:left; */
-	 float:left;
+ul#rhapsodies li.rhapsody {
+	 	float:left;
 		height:140px;
 		width:100px;
 		/* padding:10px 15px; */	
 		margin:7px;
+				
+		background:#FFF;		
 		
-		-moz-border-radius: 5px;
-		border-radius: 5px;	
-		
-		border:1px solid #CCC;
+		-webkit-border-radius: 2px;
+		-moz-border-radius: 2px;
+		font-size: 12px;
+				
+		-webkit-box-shadow: #AAA 2px 2px 5px;
+		-moz-box-shadow: #AAA 2px 2px 5px;
+		box-shadow: #AAA 2px 2px 5px;
+				
 	}
 	
 	ul#rhapsodies li a{	
@@ -107,25 +217,40 @@ ul#rhapsodies li {
 		text-decoration:none;
 		color:#000;	
 		
-		/* position:relative; */
-		
+		/* position:relative; */		
 		}
 		
 		.today{
-			background:#CCC;
-			color:#666;
-			}		
+			background:#005175;
+			color:#FFF;
+			}	
+			
+			ul#rhapsodies li a.today span.info{
+				color:#f1e9c4;
+			}	
+	
+	ul#rhapsodies li a.today:hover{
+		background: #007391;
+	}
 		
 	ul#rhapsodies li a:hover{
-		color:#FFF;
-		background:#00F;
+		background: #f15f22;
+		border: 1px solid #C8C8C8;
+		/*
+		background: #CCC;
+		border: 1px solid #DDD;
+		*/
+		
+		height: 138px;
+		width: 98px;
 		}
 	
 		ul#rhapsodies li a span.content{
 			height:110px;
 			display:block;
 			padding:5px;
-		}
+			border-top: 1px solid #fff;
+			}
 		
 		ul#rhapsodies li a span.info{
 			display:block;
@@ -134,22 +259,50 @@ ul#rhapsodies li {
 			bottom:10px;
 			font-size:120%;		
 			padding-top:4px;
-		}
+			
+			font-weight: 500;
+			border-bottom: 1px solid #C8C8C8;
+			line-height: 28px;
+			}
 	
 #footer{
-	margin:15px 0 20px 20px;
-	padding:15px 0 0 0;
-	border-top:1px solid #ddd;
+	margin:0 auto;
+	/* background:#000 url('../i/footer-bg.png') bottom center;	*/
+	background:#005175;
+	color:#999;
+	
+	padding:20px 10px;
+	
+   	width:70%;
+   	
+   	overflow-y:auto;
+   	
+   	/*
+   	position: relative;
+	height: 90px;
+	clear:both;
+	*/
+   	
+	border:1px solid #C8C8C8;
+	}
+	
+	#footer #copyright{	
+		padding:10px 0 0 15px;
+		display:inline-block;
+	}
+	
+	#footer a{
+		color:#DDD;
 	}
 	
 	#disclaimer{
 		font-size:90%;
 		display:block;
-		margin-top:15px;
-		color:#999;
-	}
+		margin-top:10px;
+		}
 .clear{
 	clear:both;
 	color:#FFF;
 	font-size:0%;
-}
+	height:0;
+	}

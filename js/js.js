@@ -9,14 +9,18 @@ var languages = new Array();
 languages.push(new lang("English","en"));
 languages.push(new lang("French","fr"));
 languages.push(new lang("Afrikaans","af"));
-languages.push(new lang("Zulu",""));
+languages.push(new lang("Zulu","en"));
 languages.push(new lang("Italian","it"));
 languages.push(new lang("Spanish","es"));
 languages.push(new lang("Swahili","sw"));
-languages.push(new lang("Lingala",""));	
+languages.push(new lang("Lingala","en"));	
 
 
 function init(){
+	
+	/* TODO: FUTURE FEATURE
+	 * --------------------
+	
 	//set language to last used
 	if(Modernizr.localstorage){
 		var lang = localStorage.getItem("language");
@@ -30,11 +34,12 @@ function init(){
 			setLanguage(lang);
 		}
 	}else{
-		//alert("shucks, we can't do diddly squat");
+		//no localStorage
 	}
+	*/
 	
     var cur_month = getMonth();
-	document.title = cur_month + " Rhapsody";
+	//document.title = cur_month + " Rhapsody";
 	$('#heading').text(cur_month + " Rhapsody");
 	setToday();
 
@@ -44,6 +49,10 @@ function init(){
 	  $(span).text(cur_month);
 	});
 	
+	
+	/*
+	 * Events
+	 */
 	$("#languages > li > a").click(function(e){
 		e.preventDefault();
 		
@@ -52,6 +61,28 @@ function init(){
 		languages.removeClass("selected");
 		$(this).addClass("selected");
 		setLanguage(this.id);
+	});
+	
+	/*
+	 * Help
+	 */
+	$("#help > img").click(function(){
+		toggleOverlay();
+		//overlay and change message
+		$("#my-dialog > h1").html("About");
+		$("#my-dialog > p").html("<div id='footer'>" +
+			"<span id='copyright'>" +
+			"© 2011 <a href='http://emile.senga.cd'>Emile Senga</a>" +
+			"</span>" +
+			"<div id='disclaimer'>" +
+			"	<ol>" +
+			"		<li>This application is in alpha stage, therefore <b>*major*</b> components are missing. It may also contain bugs, and many things may not work as expected. Please forward any issues that you pick up to emile@senga.cd so I can fix them. That is all.</li>" +
+			"		<li>Rhapsodies are downloaded as they're made available from <a href='http://www.rhapsodyofrealities.org'>www.rhapsodyofrealities.org</a>, so please be aware the current rhapsody in your language <b>*may not*</b> be available.</li>" +
+			"	</ol>" +
+			"</div>" +
+			"<input id='closeDialog' type='button' value='close' onClick='toggleOverlay();'/>" +
+			"</div>");
+		
 	});
 } 
 
@@ -130,18 +161,35 @@ function translate(text, currentLanguage, languageToTranslateTo){
 	//change current lang to proper code
 	var curLangCode = getLanguageCode(currentLanguage);	
 	//change future lang to proper code
-	var futLangCode = getLanguageCode(languageToTranslateTo);
+	var futLangCode = getLanguageCode(languageToTranslateTo);	
 	
 	google.language.translate(text, curLangCode, futLangCode, function(result) {
 		var translatedLang = result.translation;
 		setText(translatedLang);
 
-		document.title = translatedLang + " Rhapsody";
+		//document.title = translatedLang + " Rhapsody";
 		$('#heading').text(translatedLang + " Rhapsody");
-    });	
+    });
+}
+
+function simulateClick(el){
+	var a = $(el)[0];
+	var e = document.createEvent('MouseEvents');
+	e.initEvent( 'click', true, true );
+	a.dispatchEvent(e);
+}
+
+function toggleOverlay(){
+    document.body.className = document.body.className.indexOf('overlaid') != -1 ? '' : 'overlaid';
 }
 
 
 $(function(){
 	init();
+	document.addEventListener('DOMContentLoaded', function(){
+        // close when the gray part is clicked
+        document.querySelector('.overlay').addEventListener('click', function(ev){
+          if (/overlay|wrap/.test(ev.target.className)) toggleOverlay();
+        });
+    });
 });
